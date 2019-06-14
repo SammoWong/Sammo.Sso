@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sammo.Sso.Domain.Core\Sammo.Sso.Domain.Core.csproj" />
+  </ItemGroup>
+
+</Project>
