@@ -24,9 +24,9 @@ namespace Sammo.Sso.Domain.Entities
 
         public bool Enabled { get; set; }
 
-        public Guid CreatedBy { get; set; }
+        public Guid? CreatedBy { get; set; }
 
-        public DateTime CreatedTime { get; set; }
+        public DateTime? CreatedTime { get; set; }
 
         public Guid? ModifiedBy { get; set; }
 

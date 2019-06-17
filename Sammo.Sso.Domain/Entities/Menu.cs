@@ -8,6 +8,8 @@ namespace Sammo.Sso.Domain.Entities
 {
     public class Menu : Entity, ICreatable, IModifiable
     {
+        public Guid ApplicationId { get; set; }
+
         public Guid? ParentId { get; set; }
 
         public string Name { get; set; }
@@ -22,23 +24,25 @@ namespace Sammo.Sso.Domain.Entities
 
         public short Rank { get; set; }//等级
 
-        public int? SortNumber { get; set; }//排序
+        public int SortNumber { get; set; }//排序
 
-        public bool? IsExpanded { get; set; }
+        public bool IsExpanded { get; set; }
 
         public bool Enabled { get; set; }
 
         public string Remark { get; set; }
 
-        public Guid CreatedBy { get; set; }
+        public Guid? CreatedBy { get; set; }
 
-        public DateTime CreatedTime { get; set; }
+        public DateTime? CreatedTime { get; set; }
 
         public Guid? ModifiedBy { get; set; }
 
         public DateTime? ModifiedTime { get; set; }
 
         public virtual ICollection<Button> Buttons { get; set; }
+
+        public virtual Application Application { get; set; }
     }
 
     public enum MenuType : byte

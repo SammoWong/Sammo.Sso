@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Sammo.Sso.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sammo.Sso.Infrastructure.Data.Configurations
 {
@@ -34,7 +31,10 @@ namespace Sammo.Sso.Infrastructure.Data.Configurations
                 .HasMaxLength(Domain.Constants.Validation.EntityValidator.GuidStringLength);
 
             //设置表之间关系
-            //builder.HasOne(e=>e.User).WithMany(e=>e)
+            //User与UserRole一对多关系
+            builder.HasOne(e => e.User).WithMany(e => e.UserRoles).HasForeignKey(e => e.UserId).OnDelete(DeleteBehavior.SetNull);
+            //Role与UserRole一对多关系
+            builder.HasOne(e => e.Role).WithMany(e => e.UserRoles).HasForeignKey(e => e.RoleId).OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

@@ -20,9 +20,11 @@ namespace Sammo.Sso.Domain.Entities
 
         public string DisplayName { get; set; }
 
-        public Guid CreatedBy { get; set; }
+        public string Remark { get; set; }
 
-        public DateTime CreatedTime { get; set; }
+        public Guid? CreatedBy { get; set; }
+
+        public DateTime? CreatedTime { get; set; }
 
         public Guid? ModifiedBy { get; set; }
 

@@ -1,9 +1,7 @@
 ﻿using Sammo.Sso.Domain.Core.Models;
 using Sammo.Sso.Domain.Core.Models.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace Sammo.Sso.Domain.Entities
 {
@@ -17,13 +15,13 @@ namespace Sammo.Sso.Domain.Entities
 
         public string AccessId { get; set; }
 
-        public int? SortNumber { get; set; }
+        public int SortNumber { get; set; }
 
         public bool Enabled { get; set; }
 
-        public Guid CreatedBy { get; set; }
+        public Guid? CreatedBy { get; set; }
 
-        public DateTime CreatedTime { get; set; }
+        public DateTime? CreatedTime { get; set; }
 
         public Guid? ModifiedBy { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using Sammo.Sso.Domain.Core.Models;
+using Sammo.Sso.Domain.Core.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace Sammo.Sso.Domain.Entities
 {
-    public class User : Entity
+    public class User : Entity, ICreatable, IModifiable
     {
         public string UserName { get; set; }
 
@@ -32,7 +33,15 @@ namespace Sammo.Sso.Domain.Entities
 
         public bool Enabled { get; set; }
 
-        public virtual ICollection<Role> Roles { get; set; }
+        public virtual ICollection<UserRole> UserRoles { get; set; }
+
+        public Guid? CreatedBy { get; set; }
+
+        public DateTime? CreatedTime { get; set; }
+
+        public Guid? ModifiedBy { get; set; }
+
+        public DateTime? ModifiedTime { get; set; }
     }
 
     public enum Gender : byte

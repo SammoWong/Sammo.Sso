@@ -6,8 +6,8 @@ namespace Sammo.Sso.Domain.Core.Models.Interfaces
 {
     public interface ICreatable
     {
-        Guid CreatedBy { get; set; }
+        Guid? CreatedBy { get; set; }
 
-        DateTime CreatedTime { get; set; }
+        DateTime? CreatedTime { get; set; }
     }
 }
