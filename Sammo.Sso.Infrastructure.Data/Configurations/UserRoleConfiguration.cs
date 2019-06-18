@@ -17,24 +17,21 @@ namespace Sammo.Sso.Infrastructure.Data.Configurations
             //设置字段属性
             builder.Property(e => e.Id).HasColumnName(nameof(UserRole.Id))
                 .IsRequired()
-                .HasColumnType("varchar")
-                .HasMaxLength(Domain.Constants.Validation.EntityValidator.GuidStringLength);
+                .HasColumnType($"CHAR({Domain.Constants.Validation.EntityValidator.GuidStringLength})");
 
-            builder.Property(e => e.Id).HasColumnName(nameof(UserRole.UserId))
+            builder.Property(e => e.UserId).HasColumnName(nameof(UserRole.UserId))
                 .IsRequired()
-                .HasColumnType("varchar")
-                .HasMaxLength(Domain.Constants.Validation.EntityValidator.GuidStringLength);
+                .HasColumnType($"CHAR({Domain.Constants.Validation.EntityValidator.GuidStringLength})");
 
-            builder.Property(e => e.Id).HasColumnName(nameof(UserRole.RoleId))
+            builder.Property(e => e.RoleId).HasColumnName(nameof(UserRole.RoleId))
                 .IsRequired()
-                .HasColumnType("varchar")
-                .HasMaxLength(Domain.Constants.Validation.EntityValidator.GuidStringLength);
+                .HasColumnType($"CHAR({Domain.Constants.Validation.EntityValidator.GuidStringLength})");
 
             //设置表之间关系
             //User与UserRole一对多关系
-            builder.HasOne(e => e.User).WithMany(e => e.UserRoles).HasForeignKey(e => e.UserId).OnDelete(DeleteBehavior.SetNull);
+            builder.HasOne(e => e.User).WithMany(e => e.UserRoles).HasForeignKey(e => e.UserId).OnDelete(DeleteBehavior.Cascade);
             //Role与UserRole一对多关系
-            builder.HasOne(e => e.Role).WithMany(e => e.UserRoles).HasForeignKey(e => e.RoleId).OnDelete(DeleteBehavior.SetNull);
+            builder.HasOne(e => e.Role).WithMany(e => e.UserRoles).HasForeignKey(e => e.RoleId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

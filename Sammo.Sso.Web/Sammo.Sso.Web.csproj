@@ -18,4 +18,9 @@
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sammo.Sso.Infrastructure.Data\Sammo.Sso.Infrastructure.Data.csproj" />
+  </ItemGroup>
+
 </Project>
