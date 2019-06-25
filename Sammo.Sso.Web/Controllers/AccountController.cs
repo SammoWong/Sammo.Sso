@@ -19,5 +19,11 @@ namespace Sammo.Sso.Web.Controllers
         {
             return Ok();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            return Ok();
+        }
     }
 }
