@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,7 +8,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
+using Sammo.Sso.Domain.Entities;
+using Sammo.Sso.Domain.Interfaces;
 using Sammo.Sso.Infrastructure.Data.Context;
+using Sammo.Sso.Infrastructure.Data.Repositories;
+using Sammo.Sso.Infrastructure.Filters;
+using Sammo.Sso.Infrastructure.Identity.Services;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Sammo.Sso.Web
@@ -31,16 +39,42 @@ namespace Sammo.Sso.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //添加Swagger
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "SSO API", Version = "v1" });
+            });
+
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(ModelErrorFilter));
+                options.Filters.Add(typeof(ExceptionErrorFilter));
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDbContext<SsoDbContext>();
+            services.AddScoped<IRepository<User>, Repository<User>>();
+            services.AddScoped<IdentityService>();
 
-            services.AddAuthentication(options =>
+            services.AddAuthentication(s =>
             {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                //添加JWT Scheme
+                s.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                s.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                s.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                s.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,//是否验证Issuer
+                    ValidateAudience = false,//是否验证Audience
+                    ValidateLifetime = true,//是否验证失效时间
+                    ValidateIssuerSigningKey = true,//是否验证SecurityKey
+                    ValidAudience = "SSO",//Audience
+                    ValidIssuer = "SSO",//Issuer，这两项和前面签发jwt的设置一致
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("Secret").Value))//拿到SecurityKey
+                };
             })
             .AddCookie(options =>
             {
@@ -86,6 +120,7 @@ namespace Sammo.Sso.Web
                 // OIDC服务器退出后，客户端重定向时触发
                 //options.Events.OnSignedOutCallbackRedirect = context => Task.CompletedTask;
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -105,7 +140,11 @@ namespace Sammo.Sso.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "SSO API V1");
+            });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

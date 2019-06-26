@@ -1,6 +1,6 @@
-﻿namespace Sammo.Sso.Application.ViewModels.Inputs
+﻿namespace Sammo.Sso.Infrastructure.Identity.Models
 {
-    public class LoginInput
+    public class AuthenticateInput
     {
         public string Email { get; set; }
 

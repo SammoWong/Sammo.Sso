@@ -10,7 +10,7 @@ namespace Sammo.Sso.Infrastructure.Exceptions
             Code = code;
         }
 
-        public KnownException(string message, int code = ErrorCode.Default) : base(message)
+        public KnownException(int code = ErrorCode.Default, string message = null) : base(message)
         {
             Code = code;
         }

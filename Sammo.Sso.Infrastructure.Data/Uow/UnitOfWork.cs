@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using Sammo.Sso.Domain.Interfaces;
 using Sammo.Sso.Infrastructure.Data.Context;
+using System;
 
 namespace Sammo.Sso.Infrastructure.Data.Uow
 {
@@ -30,6 +31,7 @@ namespace Sammo.Sso.Infrastructure.Data.Uow
         {
             _dbContext.Dispose();
             _dbContextTransaction?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }
