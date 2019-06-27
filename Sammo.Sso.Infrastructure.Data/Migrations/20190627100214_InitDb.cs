@@ -12,7 +12,7 @@ namespace Sammo.Sso.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "CHAR(36)", nullable: false),
-                    ClientId = table.Column<string>(type: "CHAR(32)", nullable: true),
+                    ClientId = table.Column<string>(type: "VARCHAR(32)", nullable: true),
                     ClientName = table.Column<string>(type: "VARCHAR(32)", nullable: true),
                     ClientSecrets = table.Column<string>(type: "VARCHAR(32)", nullable: true),
                     RedirectUris = table.Column<string>(type: "VARCHAR(512)", nullable: true),

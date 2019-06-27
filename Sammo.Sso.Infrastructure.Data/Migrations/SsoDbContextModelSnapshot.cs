@@ -26,7 +26,7 @@ namespace Sammo.Sso.Infrastructure.Data.Migrations
 
                     b.Property<string>("ClientId")
                         .HasColumnName("ClientId")
-                        .HasColumnType("CHAR(32)");
+                        .HasColumnType("VARCHAR(32)");
 
                     b.Property<string>("ClientName")
                         .HasColumnName("ClientName")

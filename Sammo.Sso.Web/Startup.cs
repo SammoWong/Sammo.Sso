@@ -53,6 +53,7 @@ namespace Sammo.Sso.Web
 
             services.AddDbContext<SsoDbContext>();
             services.AddScoped<IRepository<User>, Repository<User>>();
+            services.AddScoped<IRepository<Domain.Entities.Application>, Repository<Domain.Entities.Application>>();
             services.AddScoped<IdentityService>();
 
             services.AddAuthentication(s =>

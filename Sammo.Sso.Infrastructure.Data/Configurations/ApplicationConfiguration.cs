@@ -20,7 +20,7 @@ namespace Sammo.Sso.Infrastructure.Data.Configurations
                 .HasColumnType($"CHAR({Domain.Constants.Validation.EntityValidator.GuidStringLength})");
 
             builder.Property(e => e.ClientId).HasColumnName(nameof(Application.ClientId))
-                .HasColumnType($"CHAR({Domain.Constants.Validation.EntityValidator.GeneralStringLength})");
+                .HasColumnType($"VARCHAR({Domain.Constants.Validation.EntityValidator.GeneralStringLength})");
 
             builder.Property(e => e.ClientName).HasColumnName(nameof(Application.ClientName))
                 .HasColumnType($"VARCHAR({Domain.Constants.Validation.EntityValidator.GeneralStringLength})");

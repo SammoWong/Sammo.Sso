@@ -9,7 +9,7 @@ using Sammo.Sso.Infrastructure.Data.Context;
 namespace Sammo.Sso.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(SsoDbContext))]
-    [Migration("20190618122746_InitDb")]
+    [Migration("20190627100214_InitDb")]
     partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,7 +28,7 @@ namespace Sammo.Sso.Infrastructure.Data.Migrations
 
                     b.Property<string>("ClientId")
                         .HasColumnName("ClientId")
-                        .HasColumnType("CHAR(32)");
+                        .HasColumnType("VARCHAR(32)");
 
                     b.Property<string>("ClientName")
                         .HasColumnName("ClientName")
