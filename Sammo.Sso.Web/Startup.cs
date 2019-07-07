@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
@@ -9,14 +10,19 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
+using Sammo.Sso.Domain.Core.Bus;
 using Sammo.Sso.Domain.Entities;
+using Sammo.Sso.Domain.EventHandlers;
+using Sammo.Sso.Domain.Events.Values;
 using Sammo.Sso.Domain.Interfaces;
+using Sammo.Sso.Infrastructure.Bus;
 using Sammo.Sso.Infrastructure.Data.Context;
 using Sammo.Sso.Infrastructure.Data.Repositories;
 using Sammo.Sso.Infrastructure.Filters;
 using Sammo.Sso.Infrastructure.Identity.Services;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Sammo.Sso.Web
 {
@@ -51,11 +57,7 @@ namespace Sammo.Sso.Web
                 options.Filters.Add(typeof(ExceptionErrorFilter));
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddDbContext<SsoDbContext>();
-            services.AddScoped<IRepository<User>, Repository<User>>();
-            services.AddScoped<IRepository<Domain.Entities.Application>, Repository<Domain.Entities.Application>>();
-            services.AddScoped<IdentityService>();
-
+            
             services.AddAuthentication(s =>
             {
                 //添加JWT Scheme
@@ -121,7 +123,7 @@ namespace Sammo.Sso.Web
                 // OIDC服务器退出后，客户端重定向时触发
                 //options.Events.OnSignedOutCallbackRedirect = context => Task.CompletedTask;
             });
-
+            RegisterServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -152,6 +154,32 @@ namespace Sammo.Sso.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private void RegisterServices(IServiceCollection services)
+        {
+            //注入DbContext
+            services.AddDbContext<SsoDbContext>();
+
+            //注入Repository
+            services.AddScoped<IRepository<User>, Repository<User>>();
+            services.AddScoped<IRepository<Domain.Entities.Application>, Repository<Domain.Entities.Application>>();
+
+            //注入基础设施层-Identity
+            services.AddScoped<IdentityService>();
+
+            //引用包:MediatR.Extensions.Microsoft.DependencyInjection
+            services.AddMediatR(typeof(Startup));
+
+            //命令总线Domain Bus (Mediator)
+            services.AddScoped<IMediatorHandler, InMemoryBus>();
+
+            //领域通知
+            //services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
+            //领域事件
+            services.AddScoped<INotificationHandler<ValueChangedEvent>, ValueEventHandler>();
+
+            services.AddMemoryCache();
         }
     }
 }
