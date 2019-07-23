@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sammo.Sso.Domain.Core", "Sa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sammo.Sso.Infrastructure.Data", "Sammo.Sso.Infrastructure.Data\Sammo.Sso.Infrastructure.Data.csproj", "{2CEE1AED-3249-450D-BAC7-F0F2030736C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sammo.Sso.Infrastructure.Identity", "Sammo.Sso.Infrastructure.Identity\Sammo.Sso.Infrastructure.Identity.csproj", "{9FE98F93-EAA2-4A20-BFC0-18277B73BFF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sammo.Sso.Infrastructure.Identity", "Sammo.Sso.Infrastructure.Identity\Sammo.Sso.Infrastructure.Identity.csproj", "{9FE98F93-EAA2-4A20-BFC0-18277B73BFF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sammo.Sso.Common", "Sammo.Sso.Common\Sammo.Sso.Common.csproj", "{B881278C-C30B-468D-82E2-E006EDDD655A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{9FE98F93-EAA2-4A20-BFC0-18277B73BFF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FE98F93-EAA2-4A20-BFC0-18277B73BFF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FE98F93-EAA2-4A20-BFC0-18277B73BFF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B881278C-C30B-468D-82E2-E006EDDD655A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B881278C-C30B-468D-82E2-E006EDDD655A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B881278C-C30B-468D-82E2-E006EDDD655A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B881278C-C30B-468D-82E2-E006EDDD655A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

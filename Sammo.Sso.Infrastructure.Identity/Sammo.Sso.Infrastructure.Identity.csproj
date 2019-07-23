@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Sammo.Sso.Common\Sammo.Sso.Common.csproj" />
     <ProjectReference Include="..\Sammo.Sso.Domain\Sammo.Sso.Domain.csproj" />
     <ProjectReference Include="..\Sammo.Sso.Infrastructure\Sammo.Sso.Infrastructure.csproj" />
   </ItemGroup>

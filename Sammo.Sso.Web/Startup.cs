@@ -18,11 +18,10 @@ using Sammo.Sso.Domain.Interfaces;
 using Sammo.Sso.Infrastructure.Bus;
 using Sammo.Sso.Infrastructure.Data.Context;
 using Sammo.Sso.Infrastructure.Data.Repositories;
-using Sammo.Sso.Infrastructure.Filters;
 using Sammo.Sso.Infrastructure.Identity.Services;
+using Sammo.Sso.Web.Filters;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace Sammo.Sso.Web
 {
@@ -57,7 +56,7 @@ namespace Sammo.Sso.Web
                 options.Filters.Add(typeof(ExceptionErrorFilter));
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            
+
             services.AddAuthentication(s =>
             {
                 //添加JWT Scheme

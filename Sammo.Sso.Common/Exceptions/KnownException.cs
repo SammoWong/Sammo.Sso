@@ -1,7 +1,8 @@
-﻿using Sammo.Sso.Domain.Constants;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Sammo.Sso.Infrastructure.Exceptions
+namespace Sammo.Sso.Common.Exceptions
 {
     public class KnownException : Exception
     {
@@ -10,7 +11,7 @@ namespace Sammo.Sso.Infrastructure.Exceptions
             Code = code;
         }
 
-        public KnownException(int code = ErrorCode.Default, string message = null) : base(message)
+        public KnownException(int code, string message = null) : base(message)
         {
             Code = code;
         }

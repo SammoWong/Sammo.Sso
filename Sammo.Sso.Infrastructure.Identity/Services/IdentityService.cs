@@ -1,14 +1,12 @@
-﻿using IdentityModel;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Sammo.Sso.Common.Exceptions;
 using Sammo.Sso.Domain.Constants;
 using Sammo.Sso.Domain.Entities;
 using Sammo.Sso.Domain.Interfaces;
-using Sammo.Sso.Infrastructure.Exceptions;
 using Sammo.Sso.Infrastructure.Identity.Models;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -53,14 +51,14 @@ namespace Sammo.Sso.Infrastructure.Identity.Services
         private async Task<string> CreateAccessToken(AuthenticationTicket ticket)
         {
             if (ticket == null)
-                throw new KnownException();
+                throw new KnownException(ErrorCode.Default);
 
             string audienceId = ticket.Properties.Parameters.ContainsKey(AudiencePropertyKey)
                 ? ticket.Properties.GetParameter<string>(AudiencePropertyKey)
                 : null;
 
             if (string.IsNullOrEmpty(audienceId))
-                throw new KnownException();
+                throw new KnownException(ErrorCode.Default);
 
             var audience = await _applicationRepository.FirstOrDefaultAsync(a => a.ClientId == audienceId);
             var expireTime = DateTime.Now.AddHours(2);

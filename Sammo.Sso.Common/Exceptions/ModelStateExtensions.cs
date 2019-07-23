@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Sammo.Sso.Infrastructure.Extensions
+namespace Sammo.Sso.Common.Extensions
 {
     public static class ModelStateExtensions
     {

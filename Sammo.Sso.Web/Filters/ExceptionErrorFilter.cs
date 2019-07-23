@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Sammo.Sso.Common.Exceptions;
 using Sammo.Sso.Domain.Constants;
-using Sammo.Sso.Infrastructure.Exceptions;
 
-namespace Sammo.Sso.Infrastructure.Filters
+namespace Sammo.Sso.Web.Filters
 {
     public class ExceptionErrorFilter : ExceptionFilterAttribute
     {

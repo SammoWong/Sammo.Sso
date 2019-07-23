@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Sammo.Sso.Common.Extensions;
 using Sammo.Sso.Domain.Constants;
-using Sammo.Sso.Infrastructure.Extensions;
 using System.Linq;
 
-namespace Sammo.Sso.Infrastructure.Filters
+namespace Sammo.Sso.Web.Filters
 {
     public class ModelErrorFilter : ActionFilterAttribute
     {
