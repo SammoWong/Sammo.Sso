@@ -13,7 +13,7 @@ namespace Sammo.Sso.Web
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
             return WebHost.CreateDefaultBuilder(args)
-                .UseUrls("https://localhost:9001/")
+                .UseUrls("http://localhost:9001/")
                 .UseStartup<Startup>();
         }
     }

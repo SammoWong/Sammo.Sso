@@ -24,14 +24,9 @@ namespace Sammo.Sso.Infrastructure.Data.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<int> CountAsync()
+        public async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate = null)
         {
-            return await _dbContext.Set<TEntity>().AsNoTracking().CountAsync();
-        }
-
-        public async Task<int> CountAsync(Expression<Func<TEntity, bool>> filter)
-        {
-            return await _dbContext.Set<TEntity>().AsNoTracking().CountAsync(filter);
+            return await Filter(predicate).CountAsync();
         }
 
         public async Task DeleteAsync(TEntity entity)
@@ -45,20 +40,14 @@ namespace Sammo.Sso.Infrastructure.Data.Repositories
             await _dbContext.Database.ExecuteSqlCommandAsync(sql, parameters);
         }
 
-        public IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> filter)
+        public IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate = null)
         {
-            var dbSet = _dbContext.Set<TEntity>().AsQueryable();
-            return filter == null ? dbSet : dbSet.Where(filter);
+            return Filter(predicate);
         }
 
-        public async Task<TEntity> FirstOrDefaultAsync()
+        public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return await _dbContext.Set<TEntity>().FirstOrDefaultAsync();
-        }
-
-        public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter)
-        {
-            return await _dbContext.Set<TEntity>().FirstOrDefaultAsync(filter);
+            return await _dbContext.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(predicate);
         }
 
         public async Task InsertAsync(TEntity entity)
@@ -67,9 +56,9 @@ namespace Sammo.Sso.Infrastructure.Data.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<bool> IsExistAsync(Expression<Func<TEntity, bool>> filter)
+        public async Task<bool> IsExistAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return await Find(filter).AsNoTracking().AnyAsync();
+            return await Filter(predicate).AnyAsync();
         }
 
         public async Task UpdateAsync(TEntity entity)
@@ -82,6 +71,15 @@ namespace Sammo.Sso.Infrastructure.Data.Repositories
         {
             _dbContext.Dispose();
             GC.SuppressFinalize(this);
+        }
+
+        private IQueryable<TEntity> Filter(Expression<Func<TEntity, bool>> predicate)
+        {
+            var query = _dbContext.Set<TEntity>().AsNoTracking().AsQueryable();
+            if (predicate != null)
+                query = query.Where(predicate);
+
+            return query;
         }
     }
 }

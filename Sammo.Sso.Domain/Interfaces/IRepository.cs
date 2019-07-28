@@ -10,17 +10,13 @@ namespace Sammo.Sso.Domain.Interfaces
     {
         Task ExecuteSqlAsync(string sql, params object[] parameters);
 
-        IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> filter);
+        IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate = null);
 
-        Task<TEntity> FirstOrDefaultAsync();
+        Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
 
-        Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter);
+        Task<bool> IsExistAsync(Expression<Func<TEntity, bool>> predicate);
 
-        Task<bool> IsExistAsync(Expression<Func<TEntity, bool>> filter);
-
-        Task<int> CountAsync();
-
-        Task<int> CountAsync(Expression<Func<TEntity, bool>> filter);
+        Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate = null);
 
         Task InsertAsync(TEntity entity);
 
