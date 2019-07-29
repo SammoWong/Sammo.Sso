@@ -3,7 +3,7 @@ using Sammo.Sso.Domain.Constants;
 
 namespace Sammo.Sso.Web.Controllers
 {
-    public class ApiController : ControllerBase
+    public class ApiBaseController : ControllerBase
     {
         protected IActionResult Succeed(string message = null, object result = null)
         {

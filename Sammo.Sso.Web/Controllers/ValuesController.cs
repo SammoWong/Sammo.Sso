@@ -13,7 +13,7 @@ namespace Sammo.Sso.Web.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class ValuesController : ApiController
+    public class ValuesController : ApiBaseController
     {
         private readonly IdentityService _identityService;
         private readonly IMediatorHandler _mediatorHandler;
