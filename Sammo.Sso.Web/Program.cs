@@ -27,6 +27,7 @@ namespace Sammo.Sso.Web
                     builder.SetMinimumLevel(LogLevel.Trace);
                 })
                 .UseNLog()
+                .UseUrls("http://localhost:9001/")
                 .UseStartup<Startup>();
         }
     }

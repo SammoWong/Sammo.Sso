@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Sammo.Sso.Infrastructure.Extensions
+namespace Sammo.Sso.Common.Extensions
 {
     public static class QueryableExtensions
     {
